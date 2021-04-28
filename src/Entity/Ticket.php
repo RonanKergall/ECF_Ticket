@@ -46,6 +46,11 @@ class Ticket
      */
     private $replies;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $close;
+
     public function __construct()
     {
         $this->replies = new ArrayCollection();
@@ -130,6 +135,18 @@ class Ticket
                 $reply->setIdTicket(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getClose(): ?bool
+    {
+        return $this->close;
+    }
+
+    public function setClose(bool $close): self
+    {
+        $this->close = $close;
 
         return $this;
     }

@@ -7,7 +7,7 @@
     
     <ul>
         {% for ticket in allTickets %}
-            <li> <a href="{{ path('ticket', {slug: ticket.id}) }}">{{ ticket.title }}</a> ({{ ticket.idCategory.libelle }}) by {{ ticket.idUser.email}}</li>
+            <li> <a href="{{ path('ticket', {slug: ticket.id}) }}">{{ ticket.title }}</a> ({{ ticket.idCategory.libelle }}) by {{ ticket.idUser.email}} {% if user.role.id > 0 %} <a href="{{ path('ticket_close', {slug: ticket.id}) }}">Close</a> {% endif %}</li>
         {% endfor %}
     </ul>
 

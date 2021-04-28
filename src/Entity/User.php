@@ -48,6 +48,11 @@ class User implements UserInterface
      */
     private $replies;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Role::class, inversedBy="users")
+     */
+    private $Role;
+
     public function __construct()
     {
         $this->tickets = new ArrayCollection();
@@ -191,6 +196,18 @@ class User implements UserInterface
                 $reply->setIdUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRole(): ?Role
+    {
+        return $this->Role;
+    }
+
+    public function setRole(?Role $Role): self
+    {
+        $this->Role = $Role;
 
         return $this;
     }

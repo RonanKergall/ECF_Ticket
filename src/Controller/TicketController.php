@@ -45,4 +45,47 @@ class TicketController extends AbstractController
             'newReplyForm' => $form->createView(),
         ]);
     }
+
+    #[Route('/close/{slug}', name: 'ticket_close')]
+    public function close($slug, Request $request): Response
+    {
+        $ticket = $this->getDoctrine()
+            ->getRepository(Ticket::class)
+            ->find($slug);
+
+        $ticket->setClose(1);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($ticket);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('user');
+    }
+
+    #[Route('/edit/{slug}', name: 'ticket_edit')]
+    public function edit($slug, Request $request): Response
+    {
+        $ticket = $this->getDoctrine()
+            ->getRepository(Ticket::class)
+            ->find($slug);
+
+        $form = $this->createForm(TicketFormType::class, $ticket);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $ticket->setIdUser($this->getUser());
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($ticket);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('ticket', ['slug' => $slug]);
+        }
+
+        return $this->render('user/newTicket.html.twig', [
+            'newTicketForm' => $form->createView(),
+        ]);
+    }
 }
