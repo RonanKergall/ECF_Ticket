@@ -1,14 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello TicketController!
-{% endblock %}
+{% block title %}Ticket{% endblock %}
 
 {% block body %}
-	{{ ticket.title }} ({{ ticket.idCategory.libelle }}) {% if user.role.id > 0 %} <a href="{{ path('ticket_edit', {slug: ticket.id}) }}">Edit</a> {% endif %}<br/><br/>
+	{{ ticket.title }} ({{ ticket.idCategory.libelle }}) {% if user.role.id > 1 %} <a href="{{ path('ticket_edit', {slug: ticket.id}) }}">Edit</a> {% endif %}<br/><br/>
 	{{ ticket.libelle }}
     
     {% for reply in ticket.replies %}
-        <br/><br/> {{ reply.libelle }}
+        <br/><br/> {{ reply.idUser.email }} ({{ reply.idUser.role.libelle }}) <br/> {{ reply.libelle }}
     {% endfor %}
     <br/><br/>
     {% if ((user == ticket.idUser) or (user.role.id > 0)) and (ticket.close == 0) %}
