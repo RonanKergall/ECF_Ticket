@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UserController!{% endblock %}
+
+{% block body %}
+    Mes tickets :
+    
+    <ul>
+        {% for ticket in myTickets %}
+            <li>{{ ticket.title }} || {{ ticket.libelle }}</li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}

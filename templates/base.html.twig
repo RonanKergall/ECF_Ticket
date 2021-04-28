@@ -13,7 +13,18 @@
             {#{{ encore_entry_script_tags('app') }}#}
         {% endblock %}
     </head>
-    <body>
+    <body>        
+        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            <a href="{{ path('user') }}">Home</a>
+            <a href="{{ path('app_logout') }}">Logout</a>
+            <a href="{{ path('user_newTicket') }}">New Ticket</a>
+        {% else %}
+            <a href="{{ path('app') }}">Home</a>
+            <a href="{{ path('app_login') }}">Login</a>
+            <a href="{{ path('app_register') }}">Register</a>    
+        {% endif %}
+
+        <br /><br />
         {% block body %}{% endblock %}
     </body>
 </html>
