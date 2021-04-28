@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+    Category : (<a href="{{ path('user_admin_categoryNew') }}">Add category</a>)
+
+    <ul>
+        {% for category in allCategories %}
+            <li> {{ category.libelle }} <a href="{{ path('user_admin_categoryEdit', {slug: category.id}) }}">edit</a> {% if category.id != 0 %} <a href="{{ path('user_admin_categoryDelete', {slug: category.id}) }}">Delete</a>{% endif %} </li>
+        {% endfor %}
+    </ul>
+
+    <br/><br/><br/>
+
+    Users : (<a href="{{ path('user_admin_userNew') }}">Add user</a>)
+
+    <ul>
+        {% for user in allUsers %}
+            <li> {{ user.email }} ({{ user.role.libelle}}) <a href="{{ path('user_admin_userEdit', {slug: user.id}) }}">edit</a> </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

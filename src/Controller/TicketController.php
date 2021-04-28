@@ -86,6 +86,7 @@ class TicketController extends AbstractController
 
         return $this->render('user/newTicket.html.twig', [
             'newTicketForm' => $form->createView(),
+            'user' => $this->getUser(),
         ]);
     }
 }

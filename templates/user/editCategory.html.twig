@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Ticket{% endblock %}
+
+{% block body %}
+    <h1>New Ticket</h1>
+
+    {{ form_start(newCategoryForm) }}
+        {{ form_row(newCategoryForm.libelle) }}
+
+        <button type="submit" class="btn">Envoyer</button>
+    {{ form_end(newCategoryForm) }}
+{% endblock %}

@@ -20,8 +20,8 @@ class TicketFormType extends AbstractType
             ->add('idCategory', EntityType::class, [
                 'class' => Category::class,
                 'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('u')
-                        ->orderBy('u.libelle', 'ASC');
+                    return $er->createQueryBuilder('c')
+                        ->orderBy('c.libelle', 'ASC');
                 },
                 'choice_label' => 'libelle',
             ]);

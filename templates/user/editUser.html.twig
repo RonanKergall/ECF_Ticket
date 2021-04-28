@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Ticket{% endblock %}
+
+{% block body %}
+    <h1>New Ticket</h1>
+
+    {{ form_start(newUserForm) }}
+        {{ form_row(newUserForm.email) }}
+        {{ form_row(newUserForm.password) }}
+        {{ form_row(newUserForm.Role) }}
+
+        <button type="submit" class="btn">Envoyer</button>
+    {{ form_end(newUserForm) }}
+{% endblock %}
