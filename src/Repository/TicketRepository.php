@@ -19,11 +19,25 @@ class TicketRepository extends ServiceEntityRepository
         parent::__construct($registry, Ticket::class);
     }
 
-    public function findByidUser($value){
+    /**
+     * @return Ticket[]
+     */
+    public function findByUser($value): array
+    {
+        // $entityManager = $this->getEntityManager();
+
+        // $query = $entityManager->createQuery(
+        //     'SELECT t
+        //     FROM App\Entity\Ticket t
+        //     WHERE t.idUSER = :val'
+        // )->setParameter('val', $value);
+
+        // return $query->getResult();
+
         $qb = $this->createQueryBuilder('t')
-            ->andWhere('t.id_user_id = :val')
-            ->setParameter('val', $value)
-            ->orderBy('t.id', 'ASC');
+           ->andWhere('t.idUser = :val')
+           ->setParameter('val', $value)
+           ->orderBy('t.id', 'ASC');
 
         $query = $qb->getQuery();
         return $query->execute();

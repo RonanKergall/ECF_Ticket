@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TicketRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -32,6 +34,22 @@ class Ticket
      * @ORM\JoinColumn(nullable=false)
      */
     private $idUser;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="tickets")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $idCategory;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Reply::class, mappedBy="idTicket", orphanRemoval=true)
+     */
+    private $replies;
+
+    public function __construct()
+    {
+        $this->replies = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -70,6 +88,48 @@ class Ticket
     public function setIdUser(?User $idUser): self
     {
         $this->idUser = $idUser;
+
+        return $this;
+    }
+
+    public function getIdCategory(): ?Category
+    {
+        return $this->idCategory;
+    }
+
+    public function setIdCategory(?Category $idCategory): self
+    {
+        $this->idCategory = $idCategory;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Reply[]
+     */
+    public function getReplies(): Collection
+    {
+        return $this->replies;
+    }
+
+    public function addReply(Reply $reply): self
+    {
+        if (!$this->replies->contains($reply)) {
+            $this->replies[] = $reply;
+            $reply->setIdTicket($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReply(Reply $reply): self
+    {
+        if ($this->replies->removeElement($reply)) {
+            // set the owning side to null (unless already changed)
+            if ($reply->getIdTicket() === $this) {
+                $reply->setIdTicket(null);
+            }
+        }
 
         return $this;
     }

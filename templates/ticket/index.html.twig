@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello TicketController!
+{% endblock %}
+
+{% block body %}
+	{{ ticket.title }} ({{ ticket.idCategory.libelle }})<br/><br/>
+	{{ ticket.libelle }}
+    
+    {% for reply in ticket.replies %}
+        <br/><br/> {{ reply.libelle }}
+    {% endfor %}
+    <br/><br/>
+    {% if user == ticket.idUser %}
+        {{ form_start(newReplyForm) }}
+            {{ form_row(newReplyForm.libelle) }}
+
+            <button type="submit" class="btn">Envoyer</button>
+        {{ form_end(newReplyForm) }}
+    {% endif %}
+{% endblock %}
